@@ -1,0 +1,11 @@
+z64hdr-builder/oot_mq_debug$ rm -r z64hdr
+z64hdr-builder/oot_mq_debug$ cp -r z64hdr-base z64hdr
+
+z64hdr-builder/oot_mq_debug$ patch -p0 <patch.txt
+
+after having fixed any conflict (.rej files),
+make more manual changes if needed
+
+if manual changes or conflicts fixed, make new patch file:
+
+z64hdr-builder/oot_mq_debug$ diff -Naur z64hdr-base z64hdr > patch.txt

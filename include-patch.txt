@@ -1,0 +1,57 @@
+diff -Naur include-base/include/functions.h include/include/functions.h
+--- include-base/include/functions.h	2022-04-15 15:41:59.684120139 +0200
++++ include/include/functions.h	2022-04-16 10:11:11.489158846 +0200
+@@ -3,20 +3,7 @@
+ 
+ #include "z64.h"
+ 
+-f32 fabsf(f32 f);
+-#ifndef __sgi
+-#define fabsf __builtin_fabsf
+-f32 __floatundisf(u32 c);
+-f64 __floatundidf(u32 c); 
+-f32 __powisf2(f32 a, s32 b);
+-unsigned long __udivdi3(unsigned long a, unsigned long b);
+-#else
+-#pragma intrinsic(fabsf)
+-#endif
+-f32 sqrtf(f32 f);
+-#pragma intrinsic(sqrtf)
+-f64 sqrt(f64 d);
+-#pragma intrinsic(sqrt)
++#include "common/intrinsics.h"
+ 
+ void cleararena(void);
+ void bootproc(void);
+@@ -35,9 +22,15 @@
+ s32 DmaMgr_SendRequestImpl(DmaRequest* req, u32 ram, u32 vrom, u32 size, u32 unk, OSMesgQueue* queue, OSMesg msg);
+ s32 DmaMgr_SendRequest0(u32 ram, u32 vrom, u32 size);
+ void DmaMgr_Init(void);
+-s32 DmaMgr_SendRequest2(DmaRequest* req, u32 ram, u32 vrom, u32 size, u32 unk5, OSMesgQueue* queue, OSMesg msg,
+-                        const char* file, s32 line);
+-s32 DmaMgr_SendRequest1(void* ram0, u32 vrom, u32 size, const char* file, s32 line);
++s32 DmaMgr_SendRequest2(DmaRequest* req, u32 ram, u32 vrom, u32 size, u32 unk5, OSMesgQueue* queue, OSMesg msg
++#ifdef _Z64HDR_MQ_DEBUG_
++                        , const char* file, s32 line
++);
++s32 DmaMgr_SendRequest1(void* ram0, u32 vrom, u32 size
++#ifdef _Z64HDR_MQ_DEBUG_
++                        , const char* file, s32 line
++#endif
++);
+ void* Yaz0_FirstDMA(void);
+ void* Yaz0_NextDMA(void* curSrcPos);
+ void Yaz0_DecompressImpl(Yaz0Header* hdr, u8* dst);
+diff -Naur include-base/include/z64actor.h include/include/z64actor.h
+--- include-base/include/z64actor.h	2022-04-15 15:41:59.684120139 +0200
++++ include/include/z64actor.h	2022-04-16 10:07:34.380103526 +0200
+@@ -196,7 +196,9 @@
+     /* 0x130 */ ActorFunc update; // Update Routine. Called by `Actor_UpdateAll`
+     /* 0x134 */ ActorFunc draw; // Draw Routine. Called by `Actor_Draw`
+     /* 0x138 */ ActorOverlay* overlayEntry; // Pointer to the overlay table entry for this actor
++    #ifdef _Z64HDR_OOT_MQ_DEBUG_
+     /* 0x13C */ char dbgPad[0x10]; // Padding that only exists in the debug rom
++    #endif
+ } Actor; // size = 0x14C
+ 
+ typedef enum {
