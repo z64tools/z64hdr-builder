@@ -49,3 +49,11 @@ Example usage:
 ```
 ./gen_changelog.py /home/dragorn421/Documents/z64hdr/oot_mq_debug/syms.json syms_oot_mq_debug/syms.json ./changelog/
 ```
+
+## LICENSE
+
+Either CC0 or Unlicense, your choice. (public domain)
+
+`# SPDX-License-Identifier: CC0-1.0 OR Unlicense`
+
+This readme's contents is also public domain (cc0 or unlicense, your choice)
