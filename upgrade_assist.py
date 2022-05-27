@@ -83,10 +83,10 @@ confirm_call(["rm", "-r", z64hdr_include_path])
 confirm_call(["cp", "-r", "include", z64hdr_include_path])
 
 print(
-    "Copy z64hdr.h and z64hdr.ld from z64hdr repo to builder's syms repo "
+    "Copy syms.ld, z64hdr.h and z64hdr.ld from z64hdr repo to builder's syms repo "
     "(all other files will be ignored and deleted)"
 )
-for file in ("z64hdr.h", "z64hdr.ld"):
+for file in ("syms.ld", "z64hdr.h", "z64hdr.ld"):
     confirm_call(
         [
             "cp",
