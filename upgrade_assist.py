@@ -3,7 +3,6 @@
 import argparse
 import subprocess
 import os.path
-import json
 
 
 def confirm_call(cmd_args: list[str], stdin=None, stdout=None, check=True):
@@ -71,11 +70,15 @@ if (
 print("--- Changelog generation")
 
 if input("Generate changelog? ('yes' for yes): ") == "yes":
-    with open(z64hdr_oot_version_path + os.path.sep + "syms.json") as f:
-        old_syms = json.load(f)
-    with open(syms_oot_version_path + os.path.sep + "syms.json") as f:
-        new_syms = json.load(f)
-    # TODO find differences
+    confirm_call(["rm", "-r", "./changelog/"])
+    confirm_call(
+        [
+            "./gen_changelog.py",
+            z64hdr_oot_version_path + os.path.sep + "syms.json",
+            syms_oot_version_path + os.path.sep + "syms.json",
+            "./changelog/",
+        ]
+    )
 
 print("--- Update z64hdr repo")
 
