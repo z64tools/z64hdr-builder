@@ -218,9 +218,21 @@ def update_z64hdr(
                 out_lines.append(f" /* {section} */")
                 symbol_pad = max(len(symbol) for symbol in section_symbols.keys())
                 for symbol, (ram, rom) in section_symbols.items():
-                    line = f"  {symbol:<{symbol_pad}} = 0x{ram:08X};"
-                    if section != ".bss":
-                        line += f"  /* ROM: 0x{rom:08X} */"
+                    try:
+                        line = f"  {symbol:<{symbol_pad}} = 0x{ram:08X};"
+                        if section != ".bss":
+                            line += f"  /* ROM: 0x{rom:08X} */"
+                    except:
+                        print(
+                            "Couldn't format line",
+                            repr(symbol),
+                            repr(ram),
+                            repr(rom),
+                            repr(symbol_pad),
+                            repr(section),
+                            repr(objfile),
+                        )
+                        raise
                     out_lines.append(line)
         out_lines.append("")
 
