@@ -48,7 +48,16 @@ confirm_call(["cp", "-r", "include-base", "include"])
 
 print("--- Patch include (make sure to fix conflicts if any)")
 with open("include-patch.txt") as f:
-    confirm_call(["patch", "-p0"], stdin=f)
+    patch_cp = confirm_call(["patch", "-p0"], stdin=f, check=False)
+if patch_cp.returncode == 0:
+    print("No conflicts")
+elif patch_cp.returncode == 1:
+    print("THERE ARE CONFLICTS!")
+    print("Fix the conflicts")
+    print("Also delete the .orig and .rej files")
+    print("then generate a new patch to update it for the future")
+else:
+    print("patch failed unexpectedly (not due to conflicts)")
 
 print("Fix any conflict, or make changes if needed, in include/")
 
