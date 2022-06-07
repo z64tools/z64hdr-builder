@@ -178,10 +178,15 @@ def update_z64hdr(
         elif objfile.startswith("build/src/elf_message/"):
             # this is data which symbols aren't used directly
             skip = True
+        elif (
+            objfile == "build/asm/entry.o"
+            # decomp 4775fd4a7ea8077f603900def093124f8aa7cec6 : asm/entry.s -> src/makerom/entry.s
+            or objfile == "build/src/makerom/entry.o"
+        ):
+            # skip `entrypoint` symbol
+            skip = True
         elif objfile.startswith("build/src/"):
             out_lines = out_lines_src
-        elif objfile == "build/asm/entry.o":  # skip `entrypoint` symbol
-            skip = True
         elif objfile.startswith("build/assets/scenes/"):
             out_lines = out_lines_assets_scenes
         elif objfile.startswith("build/assets/objects/"):
