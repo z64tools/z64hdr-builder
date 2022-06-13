@@ -6,8 +6,10 @@ import argparse
 import subprocess
 import os.path
 
+from typing import List
 
-def confirm_call(cmd_args: list[str], stdin=None, stdout=None, check=True):
+
+def confirm_call(cmd_args: List[str], stdin=None, stdout=None, check=True):
     print("Command:")
     if any(any(c.isspace() for c in arg) for arg in cmd_args):
         print(cmd_args)
