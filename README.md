@@ -1,3 +1,5 @@
+This tool was supplanted by https://github.com/z64tools/z64genhdr
+
 # z64hdr-builder
 
 Stuff to make updating z64hdr easy
